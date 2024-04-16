@@ -1,0 +1,800 @@
+==================================================
+Function Name     : luaopen_luasteam
+Address           : 0x00000001800051d0
+Relative Address  : 0x000051d0
+Ordinal           : 1 (0x1)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_activateActionSet
+Address           : 0x00000001800035e0
+Relative Address  : 0x000035e0
+Ordinal           : 2 (0x2)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_activateActionSetLayer
+Address           : 0x00000001800036a0
+Relative Address  : 0x000036a0
+Ordinal           : 3 (0x3)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_activateGameOverlay
+Address           : 0x0000000180002dc0
+Relative Address  : 0x00002dc0
+Ordinal           : 4 (0x4)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_activateGameOverlayToWebPage
+Address           : 0x0000000180002e30
+Relative Address  : 0x00002e30
+Ordinal           : 5 (0x5)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_createItem
+Address           : 0x00000001800058b0
+Relative Address  : 0x000058b0
+Ordinal           : 6 (0x6)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_deactivateActionSetLayer
+Address           : 0x0000000180003710
+Relative Address  : 0x00003710
+Ordinal           : 7 (0x7)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_deactivateAllActionSetLayers
+Address           : 0x0000000180003780
+Relative Address  : 0x00003780
+Ordinal           : 8 (0x8)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_downloadLeaderboardEntries
+Address           : 0x0000000180008af0
+Relative Address  : 0x00008af0
+Ordinal           : 9 (0x9)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_equint64
+Address           : 0x0000000180001460
+Relative Address  : 0x00001460
+Ordinal           : 10 (0xa)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_findLeaderboard
+Address           : 0x00000001800084a0
+Relative Address  : 0x000084a0
+Ordinal           : 11 (0xb)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_findOrCreateLeaderboard
+Address           : 0x00000001800085a0
+Relative Address  : 0x000085a0
+Ordinal           : 12 (0xc)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getAchievement
+Address           : 0x0000000180008270
+Relative Address  : 0x00008270
+Ordinal           : 13 (0xd)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getActionOriginFromXboxOrigin
+Address           : 0x0000000180004790
+Relative Address  : 0x00004790
+Ordinal           : 14 (0xe)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getActionSetHandle
+Address           : 0x00000001800038d0
+Relative Address  : 0x000038d0
+Ordinal           : 15 (0xf)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getActiveActionSetLayers
+Address           : 0x00000001800037d0
+Relative Address  : 0x000037d0
+Ordinal           : 16 (0x10)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getAnalogActionData
+Address           : 0x0000000180003930
+Relative Address  : 0x00003930
+Ordinal           : 17 (0x11)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getAnalogActionHandle
+Address           : 0x0000000180003a80
+Relative Address  : 0x00003a80
+Ordinal           : 18 (0x12)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getAnalogActionOrigins
+Address           : 0x0000000180003ae0
+Relative Address  : 0x00003ae0
+Ordinal           : 19 (0x13)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getAppID
+Address           : 0x00000001800097c0
+Relative Address  : 0x000097c0
+Ordinal           : 20 (0x14)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getConnectedControllers
+Address           : 0x0000000180003c10
+Relative Address  : 0x00003c10
+Ordinal           : 21 (0x15)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getControllerForGamepadIndex
+Address           : 0x0000000180003cd0
+Relative Address  : 0x00003cd0
+Ordinal           : 22 (0x16)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getCurrentActionSet
+Address           : 0x0000000180003d30
+Relative Address  : 0x00003d30
+Ordinal           : 23 (0x17)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getCurrentGameLanguage
+Address           : 0x0000000180001080
+Relative Address  : 0x00001080
+Ordinal           : 24 (0x18)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getDeviceBindingRevision
+Address           : 0x00000001800048b0
+Relative Address  : 0x000048b0
+Ordinal           : 25 (0x19)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getDigitalActionData
+Address           : 0x0000000180003d90
+Relative Address  : 0x00003d90
+Ordinal           : 26 (0x1a)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getDigitalActionHandle
+Address           : 0x0000000180003e60
+Relative Address  : 0x00003e60
+Ordinal           : 27 (0x1b)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getDigitalActionOrigins
+Address           : 0x0000000180003ec0
+Relative Address  : 0x00003ec0
+Ordinal           : 28 (0x1c)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getFriendPersonaName
+Address           : 0x0000000180002e90
+Relative Address  : 0x00002e90
+Ordinal           : 29 (0x1d)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getGamepadIndexForController
+Address           : 0x0000000180003ff0
+Relative Address  : 0x00003ff0
+Ordinal           : 30 (0x1e)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getGlyphForActionOrigin
+Address           : 0x0000000180004050
+Relative Address  : 0x00004050
+Ordinal           : 31 (0x1f)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getInputTypeForHandle
+Address           : 0x00000001800040c0
+Relative Address  : 0x000040c0
+Ordinal           : 32 (0x20)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getItemInstallInfo
+Address           : 0x0000000180006100
+Relative Address  : 0x00006100
+Ordinal           : 33 (0x21)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getItemState
+Address           : 0x0000000180005ef0
+Relative Address  : 0x00005ef0
+Ordinal           : 34 (0x22)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getItemUpdateProgress
+Address           : 0x0000000180006240
+Relative Address  : 0x00006240
+Ordinal           : 35 (0x23)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getLeaderboardDisplayType
+Address           : 0x00000001800086e0
+Relative Address  : 0x000086e0
+Ordinal           : 36 (0x24)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getLeaderboardEntryCount
+Address           : 0x0000000180008800
+Relative Address  : 0x00008800
+Ordinal           : 37 (0x25)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getLeaderboardName
+Address           : 0x0000000180008870
+Relative Address  : 0x00008870
+Ordinal           : 38 (0x26)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getLeaderboardSortMethod
+Address           : 0x0000000180008770
+Relative Address  : 0x00008770
+Ordinal           : 39 (0x27)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getMotionData
+Address           : 0x0000000180004130
+Relative Address  : 0x00004130
+Ordinal           : 40 (0x28)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getNumSubscribedItems
+Address           : 0x0000000180005d90
+Relative Address  : 0x00005d90
+Ordinal           : 41 (0x29)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getPlayerSteamLevel
+Address           : 0x00000001800071e0
+Relative Address  : 0x000071e0
+Ordinal           : 42 (0x2a)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getRemotePlaySessionID
+Address           : 0x0000000180004970
+Relative Address  : 0x00004970
+Ordinal           : 43 (0x2b)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getStatFloat
+Address           : 0x00000001800080d0
+Relative Address  : 0x000080d0
+Ordinal           : 44 (0x2c)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getStatInt
+Address           : 0x0000000180008040
+Relative Address  : 0x00008040
+Ordinal           : 45 (0x2d)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getSteamID
+Address           : 0x0000000180007230
+Relative Address  : 0x00007230
+Ordinal           : 46 (0x2e)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getStringForActionOrigin
+Address           : 0x0000000180004350
+Relative Address  : 0x00004350
+Ordinal           : 47 (0x2f)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_getSubscribedItems
+Address           : 0x0000000180005de0
+Relative Address  : 0x00005de0
+Ordinal           : 48 (0x30)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_init
+Address           : 0x0000000180002820
+Relative Address  : 0x00002820
+Ordinal           : 49 (0x31)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_input_init
+Address           : 0x00000001800049e0
+Relative Address  : 0x000049e0
+Ordinal           : 50 (0x32)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_input_shutdown
+Address           : 0x0000000180004a30
+Relative Address  : 0x00004a30
+Ordinal           : 51 (0x33)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_parseUint64
+Address           : 0x0000000180002ab0
+Relative Address  : 0x00002ab0
+Ordinal           : 52 (0x34)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_requestCurrentStats
+Address           : 0x0000000180008450
+Relative Address  : 0x00008450
+Ordinal           : 53 (0x35)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_resetAllStats
+Address           : 0x0000000180008380
+Relative Address  : 0x00008380
+Ordinal           : 54 (0x36)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_runCallbacks
+Address           : 0x0000000180002940
+Relative Address  : 0x00002940
+Ordinal           : 55 (0x37)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_runFrame
+Address           : 0x00000001800043c0
+Relative Address  : 0x000043c0
+Ordinal           : 56 (0x38)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_setAchievement
+Address           : 0x0000000180008310
+Relative Address  : 0x00008310
+Ordinal           : 57 (0x39)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_setItemContent
+Address           : 0x0000000180005a60
+Relative Address  : 0x00005a60
+Ordinal           : 58 (0x3a)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_setItemDescription
+Address           : 0x0000000180005ae0
+Relative Address  : 0x00005ae0
+Ordinal           : 59 (0x3b)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_setItemPreview
+Address           : 0x0000000180005b60
+Relative Address  : 0x00005b60
+Ordinal           : 60 (0x3c)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_setItemTitle
+Address           : 0x0000000180005be0
+Relative Address  : 0x00005be0
+Ordinal           : 61 (0x3d)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_setLEDColor
+Address           : 0x00000001800043f0
+Relative Address  : 0x000043f0
+Ordinal           : 62 (0x3e)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_setRichPresence
+Address           : 0x0000000180002f00
+Relative Address  : 0x00002f00
+Ordinal           : 63 (0x3f)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_setStatFloat
+Address           : 0x00000001800081e0
+Relative Address  : 0x000081e0
+Ordinal           : 64 (0x40)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_setStatInt
+Address           : 0x0000000180008160
+Relative Address  : 0x00008160
+Ordinal           : 65 (0x41)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_showBindingPanel
+Address           : 0x00000001800044e0
+Relative Address  : 0x000044e0
+Ordinal           : 66 (0x42)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_shutdown
+Address           : 0x00000001800028d0
+Relative Address  : 0x000028d0
+Ordinal           : 67 (0x43)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_startItemUpdate
+Address           : 0x00000001800059e0
+Relative Address  : 0x000059e0
+Ordinal           : 68 (0x44)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_startPlaytimeTracking
+Address           : 0x0000000180006490
+Relative Address  : 0x00006490
+Ordinal           : 69 (0x45)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_stopAnalogActionMomentum
+Address           : 0x0000000180004540
+Relative Address  : 0x00004540
+Ordinal           : 70 (0x46)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_stopPlaytimeTracking
+Address           : 0x0000000180006610
+Relative Address  : 0x00006610
+Ordinal           : 71 (0x47)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_stopPlaytimeTrackingForAllItems
+Address           : 0x0000000180006790
+Relative Address  : 0x00006790
+Ordinal           : 72 (0x48)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_storeStats
+Address           : 0x0000000180008400
+Relative Address  : 0x00008400
+Ordinal           : 73 (0x49)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_submitItemUpdate
+Address           : 0x0000000180005c60
+Relative Address  : 0x00005c60
+Ordinal           : 74 (0x4a)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_translateActionOrigin
+Address           : 0x0000000180004820
+Relative Address  : 0x00004820
+Ordinal           : 75 (0x4b)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_triggerHapticPulse
+Address           : 0x00000001800045b0
+Relative Address  : 0x000045b0
+Ordinal           : 76 (0x4c)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_triggerRepeatedHapticPulse
+Address           : 0x0000000180004640
+Relative Address  : 0x00004640
+Ordinal           : 77 (0x4d)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_triggerVibration
+Address           : 0x0000000180004710
+Relative Address  : 0x00004710
+Ordinal           : 78 (0x4e)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_uint64ToString
+Address           : 0x00000001800014c0
+Relative Address  : 0x000014c0
+Ordinal           : 79 (0x4f)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : luasteam_uploadLeaderboardScore
+Address           : 0x0000000180008900
+Relative Address  : 0x00008900
+Ordinal           : 80 (0x50)
+Filename          : luasteam.dll
+Full Path         : E:\SteamLibrary\steamapps\common\BalatroUnsteamed\game\luasteam.dll
+Type              : Exported Function
+==================================================
+
