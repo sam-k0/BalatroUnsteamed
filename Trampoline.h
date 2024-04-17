@@ -19,17 +19,16 @@ typedef void(__stdcall *lua_setfield_proto) (void** L, int idx, const char* k);
 typedef void(__stdcall *lua_pushcclosure_proto)(void** L, lua_CFunction fn, int n);
 typedef void (__stdcall *lua_pushboolean_proto)(void** L, int b);
 typedef void (__stdcall *lua_pushnumber_proto)(void** L, double n);
+typedef const char* (__stdcall *luaL_checklstring_proto)(void** L, int n, size_t *l);
+typedef double (__stdcall *luaL_checkinteger_proto)(void** L, int n);
 
 lua_createtable_proto original_lua_createtable = NULL;
 lua_setfield_proto original_lua_setfield = NULL;
 lua_pushcclosure_proto original_lua_pushcclosure = NULL;
 lua_pushboolean_proto original_lua_pushboolean = NULL;
 lua_pushnumber_proto original_lua_pushnumber = NULL;
-
-//maybe
-//- luaL_checkstring, luaL_checkint
-
-
+luaL_checklstring_proto original_luaL_checklstring = NULL;
+luaL_checkinteger_proto original_luaL_checkinteger = NULL;
 // Luasteam functions
 typedef int(__stdcall *luasteam_common_function_proto) (void** L);
 luasteam_common_function_proto original_luasteam_init = NULL;
@@ -44,8 +43,8 @@ luasteam_common_function_proto original_luasteam_getSteamID = NULL;
 
 // steam_api64.dll functions
 bool __stdcall SteamAPI_Init_hook() {
-    bool ret = original_SteamAPI_Init();
-	std::cout << "SteamAPI_Init called: "<<ret << std::endl;
+    bool ret = true; original_SteamAPI_Init();
+	std::cout << "SteamAPI_Init hook triggered: "<<ret << std::endl;
     return ret; // Hier einfach true zurückgeben
 }
 
@@ -71,73 +70,70 @@ void __stdcall lua_pushcclosure_hook(void** L, lua_CFunction fn, int n) {
 #pragma endregion
 
 #pragma region luasteam function hook functions
-int __stdcall luasteam_init_hook(void** L) {// Pushes a luaboolean "true" to the stack
+int __stdcall luasteam_init_hook(void** L) {
     int ret = original_luasteam_init(L); // Original callen
     std::cout << "luasteam_init called with return value "<<ret << std::endl;
 	return (ret);
 }
 
 int __stdcall luasteam_shutdown_hook(void** L) { // return 0
-	int ret = original_luasteam_shutdown(L);
+    int ret = 0;//original_luasteam_shutdown(L);
 	std::cout << "luasteam_shutdown called with return value " << ret << std::endl;
 	return (ret);
 }
 
 int __stdcall luasteam_runCallbacks_hook(void** L) { // return 0
     std::cout << "luasteam_runCallbacks called" << std::endl;
-    return original_luasteam_runCallbacks(L);
+    return 0;//original_luasteam_runCallbacks(L);
 }
 // setAchievements
 int __stdcall luasteam_setAchievement_hook(void** L)
 {
-    // lua pushboolean(L, true);
+    original_luaL_checklstring(L, 1, NULL);//LuaL_checkstring(L, 1);
+    original_lua_pushboolean(L, true); // Pushes a luaboolean "true" to the stack
     std::cout << "luasteam_setAchievement called" << std::endl;
-	return  original_luasteam_setAchievement(L); // return 1
+    return 1;// original_luasteam_setAchievement(L); // return 1
 }
 
 //storeStats
-int __stdcall luasteam_storeStats_hook(void** L)
+int __stdcall luasteam_storeStats_hook(void** L)// return 1
 {
 	std::cout << "luasteam_storeStats called" << std::endl;
-	return original_luasteam_storeStats(L);
+    original_lua_pushboolean(L, true); // Pushes a luaboolean "true" to the stack
+    return 1;// original_luasteam_storeStats(L);
 }
 
 // getAchievement,
 int __stdcall luasteam_getAchievement_hook(void** L)
 {
-    /**
-    
-    const char *ach_name = luaL_checkstring(L, 1);
-    bool achieved = false;
-    bool success = SteamUserStats()->GetAchievement(ach_name, &achieved);
-    lua_pushboolean(L, success);
-    if (success) {
-        lua_pushboolean(L, achieved);
-        return 2;
-    } else {
-        return 1;
-    }
-    
-    
-    */
+    original_luaL_checklstring(L, 1, NULL);
+    std::cout << "luasteam_getAchievement called: " << std::endl;
+    original_lua_pushboolean(L, true); // Pushes a luaboolean "true" to the stack
+    original_lua_pushboolean(L, true); // Pushes a luaboolean "true" to the stack
+    return 2;
 
-    int ret = original_luasteam_getAchievement(L);
-	std::cout << "luasteam_getAchievement called: "<<ret << std::endl;
-    return ret;
+    //int ret = original_luasteam_getAchievement(L);
+	//std::cout << "luasteam_getAchievement called: "<<ret << std::endl;
+    //return ret;
 }
 
 // getStatInt
 int __stdcall luasteam_getStatInt_hook(void** L)
 {
+    original_luaL_checklstring(L, 1, NULL);//luaL_checkstring(L, 1);
 	std::cout << "luasteam_getStatInt called" << std::endl;
-	return original_luasteam_getStatInt(L);
+    original_lua_pushboolean(L, false);
+    return 1;//original_luasteam_getStatInt(L);
 }
 
 //setStatInt
 int __stdcall luasteam_setStatInt_hook(void** L)
 {
+    original_luaL_checklstring(L, 1, NULL);//luaL_checkstring(L, 1);
+    original_luaL_checkinteger(L, 2);//luaL_checkint(L, 2);
+    original_lua_pushboolean(L, true);
 	std::cout << "luasteam_setStatInt called" << std::endl;
-	return original_luasteam_setStatInt(L);
+    return 1;// original_luasteam_setStatInt(L);
 }
 
 //getSteamID
@@ -431,6 +427,18 @@ namespace Trampoline {
         {
             std::cout << "Failed to get address of lua_pushnumber" << GetLastError() << std::endl;
         }
+
+        original_luaL_checklstring = (luaL_checklstring_proto)GetProcAddress(hLuaDLL, "luaL_checklstring");
+        if (!original_luaL_checklstring)
+		{
+			std::cout << "Failed to get address of luaL_checklstring" << GetLastError() << std::endl;
+		}
+
+        original_luaL_checkinteger = (luaL_checkinteger_proto)GetProcAddress(hLuaDLL, "luaL_checkinteger");
+        if (!original_luaL_checkinteger)
+		{
+			std::cout << "Failed to get address of luaL_checkinteger" << GetLastError() << std::endl;
+		}
         
         /// Hooked luasteam functions, getting called by the game
 
