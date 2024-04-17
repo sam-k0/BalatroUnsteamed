@@ -8,3 +8,4 @@ Go to the game install directory and rename "luasteam.dll" to "Original.dll", th
 ## Compiling
 - Balatro is an x64 executable, so please use the x64 Release config.
 - Make sure you have Microsoft Detours setup correctly. I recommend using vcpkg for easy linking.
+- 1 in 4 chance your Windows Installation gets wiped
