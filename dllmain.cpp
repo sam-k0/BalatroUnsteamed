@@ -16,6 +16,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     {
     case DLL_PROCESS_ATTACH:
 		Console::RedirectStdout();
+        Console::PrintRainbow("Balatro Unsteamed by sam-k0 - this is open source!");
 		Trampoline::LoadOriginalDLL();
 		break;
     case DLL_THREAD_ATTACH:

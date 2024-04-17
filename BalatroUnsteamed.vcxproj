@@ -142,12 +142,13 @@
       <EnableUAC>false</EnableUAC>
     </Link>
     <PostBuildEvent>
-      <Command>rename "$(TargetDir)BalatroUnsteamed.dll" "luasteam.dll"
+      <Command>copy /Y "$(TargetDir)BalatroUnsteamed.dll" "$(TargetDir)luasteam.dll"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Console.h" />
+    <ClInclude Include="HookInstaller.h" />
     <ClInclude Include="Trampoline.h" />
   </ItemGroup>
   <ItemGroup>
