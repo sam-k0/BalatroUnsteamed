@@ -10,14 +10,127 @@ HMODULE hOriginalDLL = NULL;
 // define Lua function types
 typedef int(*lua_CFunction) (void** L);
 typedef void(__stdcall *lua_createtable_proto) (void** L, int narr, int nrec);
+typedef void(__stdcall *lua_setfield_proto) (void** L, int idx, const char* k);
+typedef void(__stdcall *lua_pushcclosure_proto)(void** L, lua_CFunction fn, int n);
 
 lua_createtable_proto original_lua_createtable = NULL;
+lua_setfield_proto original_lua_setfield = NULL;
+lua_pushcclosure_proto original_lua_pushcclosure = NULL;
+//-  hook lua_pushboolean
+//-  hook lua_pushnumber
 
+//maybe
+//- luaL_checkstring, luaL_checkint
+
+
+// Luasteam functions
+typedef int(__stdcall *luasteam_common_function_proto) (void** L);
+luasteam_common_function_proto original_luasteam_init = NULL;
+luasteam_common_function_proto original_luasteam_shutdown = NULL;
+luasteam_common_function_proto original_luasteam_runCallbacks = NULL;
+luasteam_common_function_proto original_luasteam_setAchievement = NULL;
+luasteam_common_function_proto original_luasteam_storeStats = NULL;
+luasteam_common_function_proto original_luasteam_getAchievement = NULL;
+luasteam_common_function_proto original_luasteam_getStatInt = NULL;
+luasteam_common_function_proto original_luasteam_setStatInt = NULL;
+luasteam_common_function_proto original_luasteam_getSteamID = NULL;
+
+#pragma region lua function hooks
 void __stdcall lua_createtable_hook(void** L, int narr, int nrec) {
-	std::cout << "lua_createtable called" << std::endl;
+	//std::cout << "lua_createtable called" << std::endl;
 	original_lua_createtable(L, narr, nrec);
 }
 
+void __stdcall lua_setfield_hook(void** L, int idx, const char* k) {
+	//std::cout << "lua_setfield called with idx " << idx << " value " << k << std::endl;
+	original_lua_setfield(L, idx, k);
+}
+
+void __stdcall lua_pushcclosure_hook(void** L, lua_CFunction fn, int n) {
+    if (n == 0)
+    {
+        //std::cout << "lua_pushcclosure called with " << reinterpret_cast<void*>(fn) << std::endl;
+    }
+	original_lua_pushcclosure(L, fn, n);
+}
+#pragma endregion
+
+#pragma region luasteam function hook functions
+int __stdcall luasteam_init_hook(void** L) {// Pushes a luaboolean "true" to the stack
+    int ret = original_luasteam_init(L);
+    std::cout << "luasteam_init called with return value "<<ret << std::endl;
+	return (ret);
+}
+
+int __stdcall luasteam_shutdown_hook(void** L) {
+	int ret = original_luasteam_shutdown(L);
+	std::cout << "luasteam_shutdown called with return value " << ret << std::endl;
+	return (ret);
+}
+
+int __stdcall luasteam_runCallbacks_hook(void** L) {
+    std::cout << "luasteam_runCallbacks called" << std::endl;
+    return original_luasteam_runCallbacks(L);
+}
+// setAchievements
+int __stdcall luasteam_setAchievement_hook(void** L)
+{
+    std::cout << "luasteam_setAchievement called" << std::endl;
+	return  original_luasteam_setAchievement(L);
+}
+
+//storeStats
+int __stdcall luasteam_storeStats_hook(void** L)
+{
+	std::cout << "luasteam_storeStats called" << std::endl;
+	return original_luasteam_storeStats(L);
+}
+
+// getAchievement,
+int __stdcall luasteam_getAchievement_hook(void** L)
+{
+    /**
+    
+    const char *ach_name = luaL_checkstring(L, 1);
+    bool achieved = false;
+    bool success = SteamUserStats()->GetAchievement(ach_name, &achieved);
+    lua_pushboolean(L, success);
+    if (success) {
+        lua_pushboolean(L, achieved);
+        return 2;
+    } else {
+        return 1;
+    }
+    
+    
+    */
+
+    int ret = original_luasteam_getAchievement(L);
+	std::cout << "luasteam_getAchievement called: "<<ret << std::endl;
+    return ret;
+}
+
+// getStatInt
+int __stdcall luasteam_getStatInt_hook(void** L)
+{
+	std::cout << "luasteam_getStatInt called" << std::endl;
+	return original_luasteam_getStatInt(L);
+}
+
+//setStatInt
+int __stdcall luasteam_setStatInt_hook(void** L)
+{
+	std::cout << "luasteam_setStatInt called" << std::endl;
+	return original_luasteam_setStatInt(L);
+}
+
+//getSteamID
+int __stdcall luasteam_getSteamID_hook(void** L)
+{
+	std::cout << "luasteam_getSteamID called" << std::endl;
+	return original_luasteam_getSteamID(L);
+}
+#pragma endregion
 
 // define the hooked functions
 EXPORT int luaopen_luasteam(void** L) {
@@ -40,566 +153,6 @@ EXPORT int luaopen_luasteam(void** L) {
 
     return pfnOriginal(L);
 }
-
-#pragma region Hooked Functions
-
-EXPORT int luasteam_activateActionSet(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_activateActionSet");
-    // Your implementation here
-    Console::RedirectStdout();
-    std::cout << "luasteam_activateActionSet called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_activateActionSetLayer(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_activateActionSetLayer");
-    // Your implementation here
-    Console::RedirectStdout();
-    std::cout << "luasteam_activateActionSetLayer called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_activateGameOverlay(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_activateGameOverlay");
-
-    // Your implementation here
-    std::cout << "luasteam_activateGameOverlay called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_activateGameOverlayToWebPage(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_activateGameOverlayToWebPage");
-    // Your implementation here
-    std::cout << "luasteam_activateGameOverlayToWebPage called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_createItem(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_createItem");
-    // Your implementation here
-    std::cout << "luasteam_createItem called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_deactivateActionSetLayer(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_deactivateActionSetLayer");
-    // Your implementation here
-    std::cout << "luasteam_deactivateActionSetLayer called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_deactivateAllActionSetLayers(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_deactivateAllActionSetLayers");
-    // Your implementation here
-    std::cout << "luasteam_deactivateAllActionSetLayers called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_downloadLeaderboardEntries(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_downloadLeaderboardEntries");
-    // Your implementation here
-    std::cout << "luasteam_downloadLeaderboardEntries called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_equint64(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_equint64");
-    // Your implementation here
-    std::cout << "luasteam_equint64 called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_findLeaderboard(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_findLeaderboard");
-    // Your implementation here
-    std::cout << "luasteam_findLeaderboard called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_findOrCreateLeaderboard(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_findOrCreateLeaderboard");
-    // Your implementation here
-    std::cout << "luasteam_findOrCreateLeaderboard called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getAchievement(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getAchievement");
-    // Your implementation here
-    std::cout << "luasteam_getAchievement called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getActionOriginFromXboxOrigin(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getActionOriginFromXboxOrigin");
-    // Your implementation here
-    std::cout << "luasteam_getActionOriginFromXboxOrigin called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getActionSetHandle(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getActionSetHandle");
-    // Your implementation here
-    std::cout << "luasteam_getActionSetHandle called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getActiveActionSetLayers(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getActiveActionSetLayers");
-    // Your implementation here
-    std::cout << "luasteam_getActiveActionSetLayers called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getAnalogActionData(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getAnalogActionData");
-    // Your implementation here
-    std::cout << "luasteam_getAnalogActionData called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getAnalogActionHandle(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getAnalogActionHandle");
-    // Your implementation here
-    std::cout << "luasteam_getAnalogActionHandle called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getAnalogActionOrigins(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getAnalogActionOrigins");
-    // Your implementation here
-    std::cout << "luasteam_getAnalogActionOrigins called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getAppID(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getAppID");
-    // Your implementation here
-    std::cout << "luasteam_getAppID called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getConnectedControllers(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getConnectedControllers");
-    // Your implementation here
-    std::cout << "luasteam_getConnectedControllers called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getControllerForGamepadIndex(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getControllerForGamepadIndex");
-    // Your implementation here
-    std::cout << "luasteam_getControllerForGamepadIndex called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getCurrentActionSet(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getCurrentActionSet");
-    // Your implementation here
-    std::cout << "luasteam_getCurrentActionSet called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getCurrentGameLanguage(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getCurrentGameLanguage");
-    // Your implementation here
-    std::cout << "luasteam_getCurrentGameLanguage called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getDeviceBindingRevision(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getDeviceBindingRevision");
-    // Your implementation here
-    std::cout << "luasteam_getDeviceBindingRevision called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getDigitalActionData(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getDigitalActionData");
-    // Your implementation here
-    std::cout << "luasteam_getDigitalActionData called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getDigitalActionHandle(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getDigitalActionHandle");
-    // Your implementation here
-    std::cout << "luasteam_getDigitalActionHandle called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getDigitalActionOrigins(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getDigitalActionOrigins");
-    // Your implementation here
-    std::cout << "luasteam_getDigitalActionOrigins called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getFriendPersonaName(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getFriendPersonaName");
-    // Your implementation here
-    std::cout << "luasteam_getFriendPersonaName called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getGamepadIndexForController(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getGamepadIndexForController");
-    // Your implementation here
-    std::cout << "luasteam_getGamepadIndexForController called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getGlyphForActionOrigin(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getGlyphForActionOrigin");
-    // Your implementation here
-    std::cout << "luasteam_getGlyphForActionOrigin called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getInputTypeForHandle(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getInputTypeForHandle");
-    // Your implementation here
-    std::cout << "luasteam_getInputTypeForHandle called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getItemInstallInfo(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getItemInstallInfo");
-    // Your implementation here
-    std::cout << "luasteam_getItemInstallInfo called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getItemState(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getItemState");
-    // Your implementation here
-        std::cout << "luasteam_getItemState called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getItemUpdateProgress(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getItemUpdateProgress");
-    // Your implementation here
-    std::cout << "luasteam_getItemUpdateProgress called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getLeaderboardDisplayType(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getLeaderboardDisplayType");
-    // Your implementation here
-    std::cout << "luasteam_getLeaderboardDisplayType called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getLeaderboardEntryCount(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getLeaderboardEntryCount");
-    // Your implementation here
-    std::cout << "luasteam_getLeaderboardEntryCount called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getLeaderboardName(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getLeaderboardName");
-    // Your implementation here
-    std::cout << "luasteam_getLeaderboardName called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getLeaderboardSortMethod(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getLeaderboardSortMethod");
-    // Your implementation here
-    std::cout << "luasteam_getLeaderboardSortMethod called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getMotionData(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getMotionData");
-    // Your implementation here
-    std::cout << "luasteam_getMotionData called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getNumSubscribedItems(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getNumSubscribedItems");
-    // Your implementation here
-    std::cout << "luasteam_getNumSubscribedItems called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getPlayerSteamLevel(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getPlayerSteamLevel");
-    // Your implementation here
-    std::cout << "luasteam_getPlayerSteamLevel called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getRemotePlaySessionID(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getRemotePlaySessionID");
-    // Your implementation here
-    std::cout << "luasteam_getRemotePlaySessionID called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getStatFloat(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getStatFloat");
-    // Your implementation here
-    std::cout << "luasteam_getStatFloat called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getStatInt(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getStatInt");
-    // Your implementation here
-    std::cout << "luasteam_getStatInt called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getSteamID(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getSteamID");
-    // Your implementation here
-    std::cout << "luasteam_getSteamID called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getStringForActionOrigin(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getStringForActionOrigin");
-    // Your implementation here
-    std::cout << "luasteam_getStringForActionOrigin called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_getSubscribedItems(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_getSubscribedItems");
-    // Your implementation here
-    std::cout << "luasteam_getSubscribedItems called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_init(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_init");
-    // Your implementation here
-    std::cout << "luasteam_init called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_input_init(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_input_init");
-    // Your implementation here
-    std::cout << "luasteam_input_init called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_input_shutdown(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_input_shutdown");
-    // Your implementation here
-    std::cout << "luasteam_input_shutdown called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_parseUint64(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_parseUint64");
-    // Your implementation here
-    std::cout << "luasteam_parseUint64 called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_requestCurrentStats(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_requestCurrentStats");
-    // Your implementation here
-    std::cout << "luasteam_requestCurrentStats called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_resetAllStats(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_resetAllStats");
-    // Your implementation here
-    std::cout << "luasteam_resetAllStats called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_runCallbacks(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_runCallbacks");
-    // Your implementation here
-    std::cout << "luasteam_runCallbacks called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_runFrame(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_runFrame");
-    // Your implementation here
-    std::cout << "luasteam_runFrame called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_setAchievement(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_setAchievement");
-    // Your implementation here
-    std::cout << "luasteam_setAchievement called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_setItemContent(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_setItemContent");
-    // Your implementation here
-    std::cout << "luasteam_setItemContent called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_setItemDescription(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_setItemDescription");
-    // Your implementation here
-    std::cout << "luasteam_setItemDescription called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_setItemPreview(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_setItemPreview");
-    // Your implementation here
-    std::cout << "luasteam_setItemPreview called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_setItemTitle(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_setItemTitle");
-    // Your implementation here
-    std::cout << "luasteam_setItemTitle called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_setLEDColor(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_setLEDColor");
-    // Your implementation here
-    std::cout << "luasteam_setLEDColor called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_setRichPresence(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_setRichPresence");
-    // Your implementation here
-    std::cout << "luasteam_setRichPresence called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_setStatFloat(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_setStatFloat");
-    // Your implementation here
-    std::cout << "luasteam_setStatFloat called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_setStatInt(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_setStatInt");
-    // Your implementation here
-    std::cout << "luasteam_setStatInt called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_showBindingPanel(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_showBindingPanel");
-    // Your implementation here
-    std::cout << "luasteam_showBindingPanel called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_shutdown(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_shutdown");
-    // Your implementation here
-    std::cout << "luasteam_shutdown called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_startItemUpdate(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_startItemUpdate");
-    // Your implementation here
-    std::cout << "luasteam_startItemUpdate called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_startPlaytimeTracking(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_startPlaytimeTracking");
-    // Your implementation here
-    std::cout << "luasteam_startPlaytimeTracking called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_stopAnalogActionMomentum(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_stopAnalogActionMomentum");
-    // Your implementation here
-    std::cout << "luasteam_stopAnalogActionMomentum called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_stopPlaytimeTracking(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_stopPlaytimeTracking");
-    // Your implementation here
-    std::cout << "luasteam_stopPlaytimeTracking called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_stopPlaytimeTrackingForAllItems(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_stopPlaytimeTrackingForAllItems");
-    // Your implementation here
-    std::cout << "luasteam_stopPlaytimeTrackingForAllItems called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_storeStats(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_storeStats");
-    // Your implementation here
-    std::cout << "luasteam_storeStats called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_submitItemUpdate(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_submitItemUpdate");
-    // Your implementation here
-    std::cout << "luasteam_submitItemUpdate called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_translateActionOrigin(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_translateActionOrigin");
-    // Your implementation here
-    std::cout << "luasteam_translateActionOrigin called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_triggerHapticPulse(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_triggerHapticPulse");
-    // Your implementation here
-    std::cout << "luasteam_triggerHapticPulse called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_triggerRepeatedHapticPulse(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_triggerRepeatedHapticPulse");
-    // Your implementation here
-    std::cout << "luasteam_triggerRepeatedHapticPulse called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_triggerVibration(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_triggerVibration");
-    // Your implementation here
-    std::cout << "luasteam_triggerVibration called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_uint64ToString(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_uint64ToString");
-    // Your implementation here
-    std::cout << "luasteam_uint64ToString called" << std::endl;
-    return pfnOriginal(L);
-}
-
-EXPORT int luasteam_uploadLeaderboardScore(void** L) {
-    lua_CFunction pfnOriginal = (lua_CFunction)GetProcAddress(hOriginalDLL, "luasteam_uploadLeaderboardScore");
-    // Your implementation here
-    std::cout << "luasteam_uploadLeaderboardScore called" << std::endl;
-    return pfnOriginal(L);
-}
-
-#pragma endregion Hooked Functions
 
 namespace Trampoline {
 
@@ -700,6 +253,24 @@ namespace Trampoline {
         return str;
     }
 
+    int InstallDetour(HMODULE SteamDLL,const char* fnName, luasteam_common_function_proto& functionOriginal, luasteam_common_function_proto functionHook)
+    {
+        functionOriginal = (luasteam_common_function_proto)GetProcAddress(SteamDLL, fnName);
+        if (!functionOriginal)
+        {
+            std::cout << "Failed to get address of"<<fnName << GetLastError() << std::endl;
+        }
+        // Detour luasteam_init
+        if (DetourTransactionBegin() != NO_ERROR ||
+            DetourUpdateThread(GetCurrentThread()) != NO_ERROR ||
+            DetourAttach(&(PVOID&)functionOriginal, functionHook) != NO_ERROR ||
+            DetourTransactionCommit() != NO_ERROR) {
+            std::cerr << "Detour failed" << std::endl;
+            return 1;
+        }
+        return 0;
+    }
+
 	BOOL LoadOriginalDLL()
 	{
 		// Find the original DLL in the current executable's directory
@@ -732,7 +303,20 @@ namespace Trampoline {
         {
 			std::cout << "Loaded the lua DLL" << std::endl;
 		}
-        
+
+        HMODULE hOriginalLuaSteamDLL = GetModuleHandleA((exedir + "\\" + g_szOriginalDLL).c_str());
+        if (!hOriginalLuaSteamDLL) {
+            std::cout << "Failed to load the luasteam DLL for hooking" << GetLastError() << std::endl;
+            return FALSE;
+        }
+        else
+        {
+            std::cout << "Loaded the luasteam DLL for hooking" << std::endl;
+        }
+
+
+
+#pragma region Hooked lua_createtable
         original_lua_createtable = (lua_createtable_proto)GetProcAddress(hLuaDLL, "lua_createtable");
         if (!original_lua_createtable) {
             std::cout << "Failed to get address of lua_createtable" << GetLastError() << std::endl;
@@ -746,7 +330,109 @@ namespace Trampoline {
             std::cerr << "Detour failed" << std::endl;
             return 1;
         }
+#pragma endregion
 
+#pragma region Hooked lua_setfield
+        original_lua_setfield = (lua_setfield_proto)GetProcAddress(hLuaDLL, "lua_setfield");
+        if (!original_lua_setfield)
+        {
+			std::cout << "Failed to get address of lua_setfield" << GetLastError() << std::endl;
+		}
+
+        // Detour lua_setfield
+        if (DetourTransactionBegin() != NO_ERROR ||
+            DetourUpdateThread(GetCurrentThread()) != NO_ERROR ||
+            DetourAttach(&(PVOID&)original_lua_setfield, lua_setfield_hook) != NO_ERROR ||
+            DetourTransactionCommit() != NO_ERROR) {
+			std::cerr << "Detour failed" << std::endl;
+			return 1;
+		}
+#pragma endregion
+
+#pragma region Hooked lua_pushcclosure
+        original_lua_pushcclosure = (lua_pushcclosure_proto)GetProcAddress(hLuaDLL, "lua_pushcclosure");
+        if (!original_lua_pushcclosure)
+        {
+            std::cout<<"Failed to get address of lua_pushcclosure" << GetLastError() << std::endl;
+        }
+        // Detour lua_pushcclosure
+        if (DetourTransactionBegin() != NO_ERROR ||
+            DetourUpdateThread(GetCurrentThread()) != NO_ERROR ||
+            DetourAttach(&(PVOID&)original_lua_pushcclosure, lua_pushcclosure_hook) != NO_ERROR ||
+            DetourTransactionCommit() != NO_ERROR) {
+            std::cerr << "Detour failed" << std::endl;
+            return 1;
+        }
+#pragma endregion
+    /// Hooked luasteam functions, getting called by the game
+
+#pragma region Hooked luasteam_init
+        original_luasteam_init = (luasteam_common_function_proto)GetProcAddress(hOriginalLuaSteamDLL, "luasteam_init");
+        if (!original_luasteam_init)
+        {
+            std::cout << "Failed to get address of luasteam_init" << GetLastError() << std::endl;
+        }
+        // Detour luasteam_init
+        if (DetourTransactionBegin() != NO_ERROR ||
+            DetourUpdateThread(GetCurrentThread()) != NO_ERROR ||
+            DetourAttach(&(PVOID&)original_luasteam_init, luasteam_init_hook) != NO_ERROR ||
+            DetourTransactionCommit() != NO_ERROR) {
+            std::cerr << "Detour failed" << std::endl;
+            return 1;
+        }
+#pragma endregion
+        
+#pragma region Hooked luasteam_shutdown
+        original_luasteam_shutdown = (luasteam_common_function_proto)GetProcAddress(hOriginalLuaSteamDLL, "luasteam_shutdown");
+        if (!original_luasteam_shutdown)
+        {
+            std::cout << "Failed to get address of luasteam_shutdown" << GetLastError() << std::endl;
+        }
+        // Detour luasteam_init
+        if (DetourTransactionBegin() != NO_ERROR ||
+            DetourUpdateThread(GetCurrentThread()) != NO_ERROR ||
+            DetourAttach(&(PVOID&)original_luasteam_shutdown, luasteam_shutdown_hook) != NO_ERROR ||
+            DetourTransactionCommit() != NO_ERROR) {
+            std::cerr << "Detour failed" << std::endl;
+            return 1;
+        }
+#pragma endregion
+        
+        if (InstallDetour(hOriginalLuaSteamDLL, "luasteam_runCallbacks", original_luasteam_runCallbacks, luasteam_runCallbacks_hook) == 1)
+        {
+            std::cout << "Failed to install detour luasteam_runCallbacks" << std::endl;
+        }
+
+        if (InstallDetour(hOriginalLuaSteamDLL,"luasteam_setAchievement", original_luasteam_setAchievement, luasteam_setAchievement_hook) == 1)
+        {
+            std::cout << "Failed to install detour luasteam_setAchievement" << std::endl;
+        }
+
+        if (InstallDetour(hOriginalLuaSteamDLL, "luasteam_storeStats", original_luasteam_storeStats, luasteam_storeStats_hook) == 1)
+		{
+			std::cout << "Failed to install detour luasteam_storeStats" << std::endl;
+		}
+
+        if (InstallDetour(hOriginalLuaSteamDLL, "luasteam_getAchievement", original_luasteam_getAchievement, luasteam_getAchievement_hook) == 1)
+        {
+            std::cout << "Failed to install detour luasteam_getAchievement" << std::endl;
+        }
+
+        if (InstallDetour(hOriginalLuaSteamDLL, "luasteam_getStatInt", original_luasteam_getStatInt, luasteam_getStatInt_hook) == 1)
+		{
+			std::cout << "Failed to install detour luasteam_getStatInt" << std::endl;
+		}
+
+        if (InstallDetour(hOriginalLuaSteamDLL, "luasteam_setStatInt", original_luasteam_setStatInt, luasteam_setStatInt_hook) == 1)
+        {
+            std::cout << "Failed to install detour luasteam_setStatInt" << std::endl;
+        }
+
+        if (InstallDetour(hOriginalLuaSteamDLL, "luasteam_getSteamID", original_luasteam_getSteamID, luasteam_getSteamID_hook) == 1)
+		{
+			std::cout << "Failed to install detour luasteam_getSteamID" << std::endl;
+		}
+        
 
         return TRUE;
 
