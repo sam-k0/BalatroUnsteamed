@@ -43,9 +43,8 @@ luasteam_common_function_proto original_luasteam_getSteamID = NULL;
 
 // steam_api64.dll functions
 bool __stdcall SteamAPI_Init_hook() {
-    bool ret = true; original_SteamAPI_Init();
-	std::cout << "SteamAPI_Init hook triggered: "<<ret << std::endl;
-    return ret; // Hier einfach true zurückgeben
+    Console::Print("SteamAPI_Init called");
+    return true;
 }
 
 
@@ -72,7 +71,6 @@ void __stdcall lua_pushcclosure_hook(void** L, lua_CFunction fn, int n) {
 #pragma region luasteam function hook functions
 int __stdcall luasteam_init_hook(void** L) {
     int ret = original_luasteam_init(L); // Original callen
-    std::cout << "luasteam_init called with return value "<<ret << std::endl;
 	return (ret);
 }
 
@@ -89,57 +87,53 @@ int __stdcall luasteam_runCallbacks_hook(void** L) { // return 0
 // setAchievements
 int __stdcall luasteam_setAchievement_hook(void** L)
 {
-    original_luaL_checklstring(L, 1, NULL);//LuaL_checkstring(L, 1);
+    original_luaL_checklstring(L, 1, NULL);
     original_lua_pushboolean(L, true); // Pushes a luaboolean "true" to the stack
-    std::cout << "luasteam_setAchievement called" << std::endl;
-    return 1;// original_luasteam_setAchievement(L); // return 1
+    Console::Print("luasteam_setAchievement hook tripped!");
+    return 1;
 }
 
 //storeStats
 int __stdcall luasteam_storeStats_hook(void** L)// return 1
 {
-	std::cout << "luasteam_storeStats called" << std::endl;
+    Console::Print("luasteam_storeStats hook tripped!");
     original_lua_pushboolean(L, true); // Pushes a luaboolean "true" to the stack
-    return 1;// original_luasteam_storeStats(L);
+    return 1;
 }
 
 // getAchievement,
 int __stdcall luasteam_getAchievement_hook(void** L)
 {
     original_luaL_checklstring(L, 1, NULL);
-    std::cout << "luasteam_getAchievement called: " << std::endl;
+    Console::Print("luasteam_getAchievement hook tripped!");
     original_lua_pushboolean(L, true); // Pushes a luaboolean "true" to the stack
     original_lua_pushboolean(L, true); // Pushes a luaboolean "true" to the stack
     return 2;
-
-    //int ret = original_luasteam_getAchievement(L);
-	//std::cout << "luasteam_getAchievement called: "<<ret << std::endl;
-    //return ret;
 }
 
 // getStatInt
 int __stdcall luasteam_getStatInt_hook(void** L)
 {
-    original_luaL_checklstring(L, 1, NULL);//luaL_checkstring(L, 1);
-	std::cout << "luasteam_getStatInt called" << std::endl;
+    original_luaL_checklstring(L, 1, NULL);
+    Console::Print("luasteam_getStatInt hook tripped!");
     original_lua_pushboolean(L, false);
-    return 1;//original_luasteam_getStatInt(L);
+    return 1;
 }
 
 //setStatInt
 int __stdcall luasteam_setStatInt_hook(void** L)
 {
-    original_luaL_checklstring(L, 1, NULL);//luaL_checkstring(L, 1);
-    original_luaL_checkinteger(L, 2);//luaL_checkint(L, 2);
+    original_luaL_checklstring(L, 1, NULL);
+    original_luaL_checkinteger(L, 2);
     original_lua_pushboolean(L, true);
-	std::cout << "luasteam_setStatInt called" << std::endl;
-    return 1;// original_luasteam_setStatInt(L);
+    Console::Print("luasteam_setStatInt hook tripped");
+    return 1;
 }
 
 //getSteamID
 int __stdcall luasteam_getSteamID_hook(void** L)
 {
-	std::cout << "luasteam_getSteamID called" << std::endl;
+    Console::Print("luasteam_getSteamID hook tripped");
 	return original_luasteam_getSteamID(L);
 }
 #pragma endregion
@@ -157,11 +151,12 @@ EXPORT int luaopen_luasteam(void** L) {
     
     if (pfnOriginal == NULL)
     {
-		std::cout << "Failed to get address of luaopen_luasteam" << std::endl;
+		Console::Print("Failed to get address of luaopen_luasteam", 2);
+        MessageBoxA(NULL, "Failed to get address of luaopen_luasteam", "Error", MB_OK | MB_ICONERROR);
 		return 0;
 	}
 
-    std::cout << "luaopen_luasteam called" << std::endl;
+    Console::Print("luaopen_luasteam called");
 
     return pfnOriginal(L);
 }
@@ -172,14 +167,14 @@ int InstallDetourLuasteam(HMODULE SteamDLL, const char* fnName, luasteam_common_
     functionOriginal = (luasteam_common_function_proto)GetProcAddress(SteamDLL, fnName);
     if (!functionOriginal)
     {
-        std::cout << "Failed to get address of" << fnName << GetLastError() << std::endl;
+        Console::Print("Failed to get address of " + std::string(fnName), 2);
+        MessageBoxA(NULL, (std::string("Failed to get address of ") + std::string(fnName)).c_str(), "Error", MB_OK | MB_ICONERROR);
     }
-    // Detour luasteam_init
     if (DetourTransactionBegin() != NO_ERROR ||
         DetourUpdateThread(GetCurrentThread()) != NO_ERROR ||
         DetourAttach(&(PVOID&)functionOriginal, functionHook) != NO_ERROR ||
         DetourTransactionCommit() != NO_ERROR) {
-        std::cerr << "Detour failed" << std::endl;
+        Console::Print("Detour " + std::string(fnName) + " failed!", 2);
         return 1;
     }
     return 0;
@@ -190,14 +185,15 @@ int InstallDetourSteamAPI(HMODULE SteamDLL, const char* fnName, SteamAPI_Init_pr
     functionOriginal = (SteamAPI_Init_proto)GetProcAddress(SteamDLL, fnName);
     if (!functionOriginal)
     {
-        std::cout << "Failed to get address of" << fnName << GetLastError() << std::endl;
+        Console::Print("Failed to get address of " + std::string(fnName), 2);
+        MessageBoxA(NULL, (std::string("Failed to get address of ") + std::string(fnName)).c_str(), "Error", MB_OK | MB_ICONERROR);
     }
     // Detour luasteam_init
     if (DetourTransactionBegin() != NO_ERROR ||
         DetourUpdateThread(GetCurrentThread()) != NO_ERROR ||
         DetourAttach(&(PVOID&)functionOriginal, functionHook) != NO_ERROR ||
         DetourTransactionCommit() != NO_ERROR) {
-        std::cerr << "Detour failed" << std::endl;
+        Console::Print("Detour " + std::string(fnName) + " failed!", 2);
         return 1;
     }
     return 0;
@@ -308,60 +304,60 @@ namespace Trampoline {
 	{
 		// Find the original DLL in the current executable's directory
         std::string exedir = GetCurrentDir();
-        std::cout << "Current directory: " << exedir << std::endl;
 
         // Load steam_api64.dll
         std::string steamapipath = (exedir + "\\steam_api64.dll");
         HMODULE hSteamDLL = LoadLibraryA(steamapipath.c_str());
-        std::cout << "Expecting DLL in : " << steamapipath << std::endl;
+        Console::Print("Expecting steam_api64.dll in : " + steamapipath, 1);
+
         if(!hSteamDLL)
         {
-			std::cout << "Failed to load the steam_api64.dll" << GetLastError() << std::endl;
+            Console::Print("Failed to load the steam_api64.dll", 2);
 			return FALSE;
 		}
 		else
 		{
-			std::cout << "Loaded the steam_api64.dll" << std::endl;
+			Console::Print("Loaded steam_api64.dll", 1);
 		}
-
+        // try to install detour for SteamAPI_Init
         InstallDetourSteamAPI(hSteamDLL, "SteamAPI_Init", original_SteamAPI_Init, SteamAPI_Init_hook);
 
         // Load luasteam
-        std::string szPath = exedir + "\\" + g_szOriginalDLL;
-        std::cout << "Expecting DLL in : " << szPath << std::endl;
+        std::string originalLuasteamDLLpath = exedir + "\\" + g_szOriginalDLL;
+        Console::Print("Expecting Original.dll in : " + originalLuasteamDLLpath, 1);
 
-		hOriginalDLL = LoadLibraryA(szPath.c_str());
+		hOriginalDLL = LoadLibraryA(originalLuasteamDLLpath.c_str());
 		if (!hOriginalDLL) {
-			// Add some error handling here.
-			//You can call GetLastError() to get more info about the error.
-			std::cout << "Failed to load the original DLL" << GetLastError() << std::endl;
+            Console::Print("Failed to load Original.dll, which is the renamed luasteam.dll", 2);
 			return FALSE;
 		}
         else
         {
-			std::cout << "Loaded the original DLL" << std::endl;
+			Console::Print("Loaded Original.dll, which is the renamed luasteam.dll", 1);
 		}
 
         // try to load lua functions
-        std::string LUAdll = exedir + "\\lua51.dll";
-        HMODULE hLuaDLL = GetModuleHandleA(LUAdll.c_str());
+        std::string lua51DLLpath = exedir + "\\lua51.dll";
+        HMODULE hLuaDLL = GetModuleHandleA(lua51DLLpath.c_str());
+        Console::Print("Expecting lua51.dll in : " + lua51DLLpath, 1);
+
         if (!hLuaDLL) {
-			std::cout << "Failed to load the lua DLL" << GetLastError() << std::endl;
+			Console::Print("Failed to load lua51.dll", 2);
 			return FALSE;
 		}
         else
         {
-			std::cout << "Loaded the lua DLL" << std::endl;
+            Console::Print("Loaded lua51.dll", 1);
 		}
 
         HMODULE hOriginalLuaSteamDLL = GetModuleHandleA((exedir + "\\" + g_szOriginalDLL).c_str());
         if (!hOriginalLuaSteamDLL) {
-            std::cout << "Failed to load the luasteam DLL for hooking" << GetLastError() << std::endl;
+            Console::Print("Failed to GetModuleHandle of Original.dll", 2);
             return FALSE;
         }
         else
         {
-            std::cout << "Loaded the luasteam DLL for hooking" << std::endl;
+            Console::Print("Successfully GetModuleHandle of Original.dll", 1);
         }        
 
 
@@ -509,7 +505,7 @@ namespace Trampoline {
 			std::cout << "Failed to install detour luasteam_getSteamID" << std::endl;
 		}
         
-
+        Console::Print("End of loading libraries and installing hooks. Hopefully everything works correctly now.", 1);
         return TRUE;
 
 	}

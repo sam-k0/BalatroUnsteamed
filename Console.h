@@ -2,6 +2,8 @@
 
 
 namespace Console {
+#define LOGLEVEL 1
+
     void RedirectStdout()
     {
         // hide the main window
@@ -35,4 +37,26 @@ namespace Console {
 
     }
 
+    void Print(std::string message, int level = 0)
+    {
+        if (level < LOGLEVEL)
+			return;
+        std::string prefix = "";
+        switch (level)
+        {
+        case 0:
+            prefix = "[INFO] ";
+            break;
+        case 1:
+            prefix = "[WARNING] ";
+            break;
+        case 2:
+            prefix = "[ERROR] ";
+            break;
+        default:
+            prefix = "[INFO] ";
+            break;
+        }
+        std::cout << prefix << message << std::endl;
+    }
 }
