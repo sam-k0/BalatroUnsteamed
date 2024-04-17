@@ -1,6 +1,6 @@
 # BalatroUnsteamed
 
-Enables you to play Balatro without Steam running
+Enables you to play Balatro without Steam running- This does not allow for pirating the game.
 
 ## Install
 Go to the game install directory and rename "luasteam.dll" to "Original.dll", then place the newly compiled "luasteam.dll" in the game directory.
