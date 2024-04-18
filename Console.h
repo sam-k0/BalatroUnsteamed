@@ -8,10 +8,11 @@
 #define MAGENTA "\033[35m"
 #define CYAN    "\033[36m"
 #define WHITE   "\033[37m"
-#define LOGLEVEL 0
 #define LOG_INFO 0
 #define LOG_WARNING 1
 #define LOG_ERROR 2
+
+int LOGLEVEL = 1;
 
 namespace Console {
 
@@ -98,8 +99,8 @@ namespace Console {
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE); // White
     }
 
-    void KeyboardMenu()
-    {
-
-    }
+    void CycleLogLevel() {
+		LOGLEVEL = (LOGLEVEL + 1) % 3;
+        std::cout << "Log level set to " << LOGLEVEL << ": 0 INFO - 1 WARN - 2 ERR"<< std::endl;
+	}
 }

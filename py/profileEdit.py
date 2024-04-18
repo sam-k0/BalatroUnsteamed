@@ -1,5 +1,9 @@
+# Credits to the man who showed me how Balatro compresses its files, problemsalved
+# Also worth noting you NEED python 3.11, otherwise zlib.compress() will be fucked.
+# Also thanks to Microsoft updating python is pain in the *ace* so please save your braincells and just use linux.
+
 import os
-import zlib
+import zlib 
 def GetCurrentDirectory():
     return os.getcwd()
 

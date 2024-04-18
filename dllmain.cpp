@@ -17,6 +17,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     case DLL_PROCESS_ATTACH:
 		Console::RedirectStdout();
         Console::PrintRainbow("Balatro Unsteamed by sam-k0 - this is open source!");
+        Console::Print("Press F1 to change log level", 69);
 		Trampoline::LoadOriginalDLL();
         CreateThread(0, 0, (LPTHREAD_START_ROUTINE)Trampoline::KeyboardMenu, 0, 0, 0);
 		break;

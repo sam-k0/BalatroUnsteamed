@@ -92,8 +92,8 @@ int __stdcall luasteam_storeStats_hook(void** L)// return 1
 // getAchievement,
 int __stdcall luasteam_getAchievement_hook(void** L)
 {
-    original_luaL_checklstring(L, 1, NULL);
-    Console::Print("luasteam_getAchievement hook tripped!");
+    const char* value = original_luaL_checklstring(L, 1, NULL);
+    Console::Print("luasteam_getAchievement hook tripped with value: " + std::string(value));
     original_lua_pushboolean(L, true); // Pushes a luaboolean "true" to the stack
     original_lua_pushboolean(L, true); // Pushes a luaboolean "true" to the stack
     return 2;
@@ -149,6 +149,22 @@ EXPORT int luaopen_luasteam(void** L) {
     return pfnOriginal(L);
 }
 
+
+namespace Cheats {
+    void Prepare()
+    {
+        original_SteamAPI_Init(); // I think I can just call this and get away with it LOL
+    }
+
+    void UnlockAchievement(const char* achname, void** L)
+    {
+        // Push an achievement name to the stack
+        // original_lua_pushstring(L, achname);
+        // Call the luasteam_setAchievement function
+        // original_luasteam_setAchievement(L);
+    }
+
+}
 
 
 namespace Trampoline {
@@ -320,7 +336,7 @@ namespace Trampoline {
             // Key F1 pressed
             if (GetAsyncKeyState(VK_F1) & 1)
 			{
-                Console::Print("F1 Pressed!");
+                Console::CycleLogLevel();
 			}
         }
     }
