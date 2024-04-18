@@ -21,8 +21,7 @@ namespace Console {
         // hide the main window
 
         if (!AllocConsole()) {
-            // Add some error handling here.
-            // You can call GetLastError() to get more info about the error.
+            MessageBoxA(NULL, "AllocConsole() failed!", "Error", MB_ICONERROR);
             return;
         }
 
@@ -97,5 +96,10 @@ namespace Console {
         // Print message with color
         std::cout << prefix << message << std::endl;
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE); // White
+    }
+
+    void KeyboardMenu()
+    {
+
     }
 }

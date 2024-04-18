@@ -311,4 +311,17 @@ namespace Trampoline {
         return TRUE;
 
 	}
+
+    void KeyboardMenu()
+    {
+        while (true) 
+        {
+            Sleep(100);
+            // Key F1 pressed
+            if (GetAsyncKeyState(VK_F1) & 1)
+			{
+                Console::Print("F1 Pressed!");
+			}
+        }
+    }
 }
