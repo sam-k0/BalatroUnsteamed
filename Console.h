@@ -103,4 +103,21 @@ namespace Console {
 		LOGLEVEL = (LOGLEVEL + 1) % 3;
         std::cout << "Log level set to " << LOGLEVEL << ": 0 INFO - 1 WARN - 2 ERR"<< std::endl;
 	}
+
+    void HideConsole() {
+		ShowWindow(GetConsoleWindow(), SW_HIDE);
+	}
+
+    void ShowConsole() {
+		ShowWindow(GetConsoleWindow(), SW_SHOW);
+	}
+
+    void ToggleConsole() {
+        if (IsWindowVisible(GetConsoleWindow())) {
+			HideConsole();
+		}
+        else {
+			ShowConsole();
+		}
+	}
 }

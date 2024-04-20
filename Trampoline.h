@@ -323,7 +323,7 @@ namespace Trampoline {
 		{
 			std::cout << "Failed to install detour luasteam_getSteamID" << std::endl;
 		}
-        Console::Print("End of loading libraries and installing hooks. Hopefully everything works correctly now.", 69);
+        Console::Print("End of loading libraries and installing hooks.\nHopefully everything works correctly now.\nYou can hide this window by pressing F2.", 69);
         return TRUE;
 
 	}
@@ -337,6 +337,10 @@ namespace Trampoline {
             if (GetAsyncKeyState(VK_F1) & 1)
 			{
                 Console::CycleLogLevel();
+			}
+            if (GetAsyncKeyState(VK_F2) & 1)
+            {
+				Console::ToggleConsole();
 			}
         }
     }
