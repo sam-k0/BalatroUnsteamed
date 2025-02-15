@@ -1,4 +1,5 @@
-# BalatroUnsteamed
+# BalatroUnsteamed 
+[![MSBuild](https://github.com/sam-k0/BalatroUnsteamed/actions/workflows/msbuild.yml/badge.svg)](https://github.com/sam-k0/BalatroUnsteamed/actions/workflows/msbuild.yml)
 
 Enables you to play Balatro without Steam running- This does not allow for pirating the game.
 
