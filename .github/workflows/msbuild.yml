@@ -5,7 +5,7 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-
+  workflow_dispatch:  # Allows manual triggering
 env:
   PROJECT_FILE_PATH: BalatroUnsteamed.vcxproj
   BUILD_CONFIGURATION: Release
