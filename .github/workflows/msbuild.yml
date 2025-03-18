@@ -44,4 +44,8 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: build-artifact
-        path: ${{env.OUTPUT_DIRECTORY}} 
+        path: ${{ github.workspace }}\x64\Release\*  # Adjust path to your build output directory
+        if-no-files-found: warn
+        compression-level: 6
+        overwrite: false
+        include-hidden-files: false
