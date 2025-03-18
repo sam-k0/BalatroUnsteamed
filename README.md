@@ -3,11 +3,15 @@
 
 *If you think this tool is helpful, please leave a ⭐️*
 
-Enables you to play Balatro without Steam running- This does not allow for pirating the game.
+Enables you to play Balatro without Steam running.
+
+**I do not condone pirating the game!**
 
 (This should also work for other games using `lua51.dll` and `luasteam.dll`)
 ## Install
-Go to the game install directory and rename "luasteam.dll" to "Original.dll", then place the newly compiled "luasteam.dll" in the game directory.
+1) Go to the game install directory and rename "luasteam.dll" to "Original.dll", then place the newly compiled "luasteam.dll" in the game directory.
+2) Run the game. The console will be hidden when everything worked correctly.
+3) You can use `F2` to toggle the console.
 
 ## Compiling
 - Balatro is an x64 executable, so please use the x64 Release config.
