@@ -4,6 +4,7 @@
 *If you think this tool is helpful, please leave a ⭐️*
 
 Enables you to play Balatro without Steam running.
+Built for Windows. If you use Balatro underneath Proton or Wine and find a way to hijack DLLs in a good manner, please let me know.
 
 **I do not condone pirating the game!**
 
@@ -13,7 +14,7 @@ Enables you to play Balatro without Steam running.
 2) Run the game. The console will be hidden when everything worked correctly.
 3) You can use `F2` to toggle the console.
 
-# Uninstall
+## Uninstall
 
 Delete "luasteam.dll" and rename "Original.dll" to "luasteam.dll"
 
